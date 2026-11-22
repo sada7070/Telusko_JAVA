@@ -29,8 +29,12 @@ public class SpringJpaDemoApplication {
 		s3.setName("Sham");
 		s3.setMarks(52);
 
-		repo.save(s1);
-		repo.save(s2);
-		repo.save(s3);
+		// System.out.println(repo.findAll());				// To get all value
+
+		// System.out.println(repo.findById(101));			// To get individual value using 'Id'
+
+		System.out.println(repo.findByName("Ram"));
+		System.out.println(repo.findByMarksGreaterThan(50));
+
 	}
 }
