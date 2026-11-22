@@ -2,108 +2,68 @@ package com.example.spring_boot_rest.repo;
 
 import com.example.spring_boot_rest.model.JobPost;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
+
 @Repository
-public class JobRepo {
+public interface JobRepo extends JpaRepository<JobPost, Integer> {
 
-    List<JobPost> jobs = new ArrayList<>();
-
-    public JobRepo() {
-        jobs.add(new JobPost(
-                1,
-                "Java Developer",
-                "Must have good experience in core Java and advanced Java",
-                2,
-                List.of("Core java", "J2EE", "Springboot", "Hibernate")
-        ));
-
-        // Frontend Developer Job Post
-        jobs.add(new JobPost(
-                2,
-                "Frontend Developer",
-                "Experience in building responsive web applications using React",
-                3,
-                List.of("HTML", "CSS", "JavaScript", "React")
-        ));
-
-        // Data Scientist Job Post
-        jobs.add(new JobPost(
-                3,
-                "Data Scientist",
-                "Strong background in machine learning and data analysis",
-                4,
-                List.of("Python", "Machine Learning", "Data Analysis")));
-
-        // Network Engineer Job Post
-        jobs.add(new JobPost(
-                4,
-                "Network Engineer",
-                "Design and implement computer networks for efficient data communication",
-                5,
-                List.of("Networking", "Cisco", "Routing", "Switching")));
-
-        // Mobile App Developer Job Post
-        jobs.add(new JobPost(
-                5,
-                "Mobile App Developer",
-                "Experience in mobile app development for iOS and Android",
-                3,
-                List.of("iOS Development", "Android Development", "Mobile App")));
-    }
-
-    public List<JobPost> getAllJobs() {
-        return jobs;
-    }
-
-    public void addJob(JobPost job) {
-        jobs.add(job);
-        System.out.println(jobs);
-    }
-
-    public JobPost getJobPost(int postId) {
-        for(JobPost job : jobs) {
-            if(job.getPostId() == postId) {
-                return job;
-            }
-        }
-        return null;
-    }
-
-    public void updateJob(JobPost jobPost) {
-        boolean found = false;
-
-        for(JobPost currentJob : jobs) {
-            if(currentJob.getPostId() == jobPost.getPostId()) {
-                found = true;
-
-                currentJob.setPostDesc(jobPost.getPostDesc());
-                currentJob.setPostProfile(jobPost.getPostProfile());
-                currentJob.setPostTechStack(jobPost.getPostTechStack());
-                currentJob.setReqExperience(jobPost.getReqExperience());
-            }
-        }
-
-        if(!found) {
-            throw new RuntimeException("Job ID " + jobPost.getPostId() + " not found");
-        }
-    }
-
-    public void deleteJob(int postId) {
-        boolean found = false;
-
-        for(JobPost currentJob : jobs) {
-            if(currentJob.getPostId() == postId) {
-                found = true;
-
-                jobs.remove(currentJob);
-            }
-        }
-
-        if(!found) {
-            throw new RuntimeException("Job ID " + postId + " not found");
-        }
-    }
+    List<JobPost> findByPostProfileContainingOrPostDescContaining(String postProfile, String postDesc);
 }
+
+
+//    public List<JobPost> getAllJobs() {
+//        return jobs;
+//    }
+//
+//    public void addJob(JobPost job) {
+//        jobs.add(job);
+//        System.out.println(jobs);
+//    }
+//
+//    public JobPost getJobPost(int postId) {
+//        for(JobPost job : jobs) {
+//            if(job.getPostId() == postId) {
+//                return job;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public void updateJob(JobPost jobPost) {
+//        boolean found = false;
+//
+//        for(JobPost currentJob : jobs) {
+//            if(currentJob.getPostId() == jobPost.getPostId()) {
+//                found = true;
+//
+//                currentJob.setPostDesc(jobPost.getPostDesc());
+//                currentJob.setPostProfile(jobPost.getPostProfile());
+//                currentJob.setPostTechStack(jobPost.getPostTechStack());
+//                currentJob.setReqExperience(jobPost.getReqExperience());
+//            }
+//        }
+//
+//        if(!found) {
+//            throw new RuntimeException("Job ID " + jobPost.getPostId() + " not found");
+//        }
+//    }
+//
+//    public void deleteJob(int postId) {
+//        boolean found = false;
+//
+//        for(JobPost currentJob : jobs) {
+//            if(currentJob.getPostId() == postId) {
+//                found = true;
+//
+//                jobs.remove(currentJob);
+//            }
+//        }
+//
+//        if(!found) {
+//            throw new RuntimeException("Job ID " + postId + " not found");
+//        }
+//    }
+//
