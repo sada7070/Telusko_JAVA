@@ -28,4 +28,7 @@ public class Product {
     private Date releaseDate;
     private boolean productAvailable;
     private int stockQuantity;
+
+    public Product(int i) {
+    }
 }
