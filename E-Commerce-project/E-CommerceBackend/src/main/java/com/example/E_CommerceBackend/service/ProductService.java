@@ -23,16 +23,17 @@ public class ProductService {
         return productRepo.findById(id).orElse(new Product(-1));
     }
 
-    public Product addProduct(Product product, MultipartFile imageFile) {
+    public Product addOrUpdateProduct(Product product, MultipartFile imageFile) throws IOException{
 
         product.setImageName(imageFile.getOriginalFilename());
         product.setImageType(imageFile.getContentType());
-        try {
-            product.setImageData(imageFile.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        product.setImageData(imageFile.getBytes());
 
         return productRepo.save(product);
     }
+
+    public void deleteProduct(int id) {
+        productRepo.deleteById(id);
+    }
+
 }
