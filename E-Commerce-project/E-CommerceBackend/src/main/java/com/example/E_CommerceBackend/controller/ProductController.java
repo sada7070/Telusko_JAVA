@@ -3,6 +3,7 @@ package com.example.E_CommerceBackend.controller;
 
 import com.example.E_CommerceBackend.model.Product;
 import com.example.E_CommerceBackend.service.ProductService;
+import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -68,7 +69,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/product/{id}")
-    public  ResponseEntity<String>deleteProduct(@PathVariable int id) {
+    public ResponseEntity<String>deleteProduct(@PathVariable int id) {
         Product product = productService.getProductById(id);
         if(product != null) {
             productService.deleteProduct(id);
@@ -77,5 +78,11 @@ public class ProductController {
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("products/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword, ServletRequest servletRequest) {
+        List<Product> products = productService.searchProducts(keyword);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
